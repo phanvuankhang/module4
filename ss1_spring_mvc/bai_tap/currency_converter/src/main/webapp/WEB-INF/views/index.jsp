@@ -19,13 +19,13 @@
         <form action="/change" method="post" style="width: 50%">
             <h5 class="form-label">The amount (USD)</h5>
             <input class="form-control" type="number" name="usd" placeholder="Enter your number need change"><br>
-            <div class="mt-4 d-flex justify-content-center">
-                <h3>Result: ${result} VND</h3>
-            </div>
             <div class="mt-4" style="display: flex;justify-content: center">
                 <button class="btn btn-success" type="submit">Change</button>
             </div>
         </form>
+    </div>
+    <div class="mt-4 d-flex justify-content-center">
+        <h3>Result: ${result} VND</h3>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

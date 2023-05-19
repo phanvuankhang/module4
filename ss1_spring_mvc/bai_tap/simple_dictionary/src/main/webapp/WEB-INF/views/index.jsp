@@ -12,14 +12,14 @@
     <div class="mb-3" style="display: flex;justify-content: center">
         <form action="/translate" method="post" style="width: 50%">
             <h4 class="form-label">Enter the word you want to translate</h4>
-            <input class="form-control" type="text" name="text"><br>
-            <div class="mt-4 d-flex justify-content-center">
-                <h3>Result: ${map.get(text)}</h3>
-            </div>
+            <input class="form-control" type="text" name="text" value="${text}"><br>
             <div class="mt-4" style="display: flex;justify-content: center">
                 <button class="btn btn-success" type="submit">Translate</button>
             </div>
         </form>
+    </div>
+    <div class="mt-4 d-flex justify-content-center">
+        <h3>Result: ${vietnamese}</h3>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"

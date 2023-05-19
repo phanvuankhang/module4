@@ -4,7 +4,7 @@ import com.example.currency_converter.service.ICurrencyService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CurrencyService implements ICurrencyService {
+public class CurrencyServiceImpl implements ICurrencyService {
 
     @Override
     public int convertVnd(int usd) {
