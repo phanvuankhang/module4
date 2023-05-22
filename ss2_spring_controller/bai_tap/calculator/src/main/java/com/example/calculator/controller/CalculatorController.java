@@ -25,7 +25,7 @@ public class CalculatorController {
         if (number2 == null) {
             number2 = 0f;
         }
-        String result = "Result " + math+ ": " + iCalculatorService.calculate(number1, number2, math);
+        String result = "Result " + math + ": " + iCalculatorService.calculate(number1, number2, math);
         if (result == null) {
             result = "Không có kết quả";
         }
