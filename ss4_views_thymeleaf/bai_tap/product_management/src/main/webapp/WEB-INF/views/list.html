@@ -24,37 +24,6 @@
     </style>
 </head>
 <body>
-<!--    <h1>Products of list</h1>-->
-<!--<p><a href="show-create-form">Create Product</a></p>-->
-<!--    <form action="search" method="get">-->
-<!--    <div>-->
-<!--        <input type="search"  name="search" placeholder="Name">-->
-<!--        <button type="submit">Search</button>-->
-<!--    </div>-->
-<!--    </form>-->
-<!--<table border="1" style="width: 500px">-->
-<!--    <tr>-->
-<!--        <th>No</th>-->
-<!--        <th>ID</th>-->
-<!--        <th>Name</th>-->
-<!--        <th>Price</th>-->
-<!--        <th>Describe</th>-->
-<!--        <th>Producer</th>-->
-<!--        <th>Actions</th>-->
-<!--    </tr>-->
-<!--    <tr th:each="productList, status:${productList}" >-->
-<!--        <td th:text="${status.count}"></td>-->
-<!--        <td th:text="${productList.id}"></td>-->
-<!--        <td th:text="${productList.name}"></td>-->
-<!--        <td th:text="${productList.price}"></td>-->
-<!--        <td th:text="${productList.describe}"></td>-->
-<!--        <td th:text="${productList.producer}"></td>-->
-<!--        <td>-->
-<!--            <a th:href="@{/show-edit-form(id=${productList.id})}"><button>Edit</button></a>-->
-<!--            <a th:href="@{/delete(id=${productList.id})}"><button>Delete</button></a>-->
-<!--        </td>-->
-<!--    </tr>-->
-<!--</table>-->
 
 
 <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: orange">
@@ -82,9 +51,8 @@
                 <h3 class="text-center">PRODUCTS OF LIST</h3>
                 <hr>
                 <div class="container text-left">
-
-                    <button type="button" class="btn btn-success btn-rounded">Create new product
-                    </button>
+                    <a href="show-create-form"><button type="button" class="btn btn-success btn-rounded">Create new product
+                    </button></a>
                 </div>
                 <div class="container text-left">
                     <table id="tableProduct" class="table table-striped table-bordered"
