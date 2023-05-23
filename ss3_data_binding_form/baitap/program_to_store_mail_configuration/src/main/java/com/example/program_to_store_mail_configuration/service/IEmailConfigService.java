@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface IEmailConfigService {
     List<EmailConfig> findAll();
-    List<String> languagesList();
-    List<Integer> pageSizeList();
+    List<String> findLanguages();
+    List<Integer> findPageSize();
+    void save(EmailConfig emailConfig);
 }

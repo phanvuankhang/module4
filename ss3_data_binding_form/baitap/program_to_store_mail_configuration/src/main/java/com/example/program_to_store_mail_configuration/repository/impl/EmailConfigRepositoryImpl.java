@@ -44,12 +44,17 @@ public class EmailConfigRepositoryImpl implements IEmailConfigRepository {
     }
 
     @Override
-    public List<String> languagesList() {
-        return languageList;
+    public List<String> findLanguages() {
+        return findLanguages();
     }
 
     @Override
-    public List<Integer> pageSizeList() {
-        return pageSizeList;
+    public List<Integer> findPageSize() {
+        return findPageSize();
+    }
+
+    @Override
+    public void save(EmailConfig emailConfig) {
+        emailList.add(emailConfig);
     }
 }

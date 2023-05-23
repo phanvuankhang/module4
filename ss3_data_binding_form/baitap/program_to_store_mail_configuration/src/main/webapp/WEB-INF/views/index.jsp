@@ -15,7 +15,7 @@
     <form:form method="post" modelAttribute="emailConfig" action="/save">
         <fieldset style="width: 30%">
             <legend align="10px"><h1>Settings</h1></legend>
-            <table class="table table-success table-striped">
+            <table class="table table-success table-striped"    >
                 <tr>
                     <td>Languages</td>
                     <td>

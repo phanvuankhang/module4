@@ -19,12 +19,17 @@ public class EmailConfigServiceImpl implements IEmailConfigService {
     }
 
     @Override
-    public List<String> languagesList() {
-        return emailConfigRepository.languagesList();
+    public List<String> findLanguages() {
+        return emailConfigRepository.findLanguages();
     }
 
     @Override
-    public List<Integer> pageSizeList() {
-        return emailConfigRepository.pageSizeList();
+    public List<Integer> findPageSize() {
+        return emailConfigRepository.findPageSize();
+    }
+
+    @Override
+    public void save(EmailConfig emailConfig) {
+        emailConfigRepository.save(emailConfig);
     }
 }
