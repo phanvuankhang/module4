@@ -12,20 +12,20 @@
 </head>
 <body>
 <div align="center">
-    <form:form method="post" modelAttribute="emailConfig" action="/save">
+    <form:form method="post" modelAttribute="emailConfig" action="/update">
         <fieldset style="width: 30%">
             <legend align="10px"><h1>Settings</h1></legend>
-            <table class="table table-success table-striped"    >
+            <table class="table table-success table-striped">
                 <tr>
                     <td>Languages</td>
                     <td>
-                        <form:select path="languages" items="${languagesList}"/>
+                        <form:select path="languages" items="${languages}"/>
                     </td>
                 </tr>
                 <tr>
                     <td>Page Size :</td>
                     <td>Show
-                        <form:select path="pageSize" items="${pageSizeList}"/>
+                        <form:select path="pageSize" items="${pageSize}"/>
                         email per page
                     </td>
                 </tr>
@@ -45,7 +45,7 @@
                 <tr>
                     <td></td>
                     <td style="width: 100%; display: flex">
-                        <button class="btn btn-sm btn-outline-primary" style="flex: 1">Update</button>
+                        <button class="btn btn-sm btn-outline-primary" style="flex: 1" type="submit">Update</button>
                         <button class="btn btn-sm btn-outline-warning" type="button" style="flex: 1"
                                 onclick="window.location.href='/'">Cancel
                         </button>

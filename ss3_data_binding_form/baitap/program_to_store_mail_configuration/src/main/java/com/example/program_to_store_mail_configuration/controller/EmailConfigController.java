@@ -17,20 +17,25 @@ public class EmailConfigController {
     @Autowired
     private IEmailConfigService emailConfigService;
 
-    @GetMapping("")
-    public String showList(Model model) {
-        List<String> languagesList = emailConfigService.findLanguages();
-        List<Integer> pageSizeList = emailConfigService.findPageSize();
-        model.addAttribute("languagesList", languagesList);
-        model.addAttribute("pageSizeList", pageSizeList);
-        model.addAttribute("emailConfig", new EmailConfig());
+    @GetMapping("/")
+    public String showHome() {
+
+        return "/setting";
+    }
+
+    @GetMapping("/setting")
+    public String setting(Model model) {
+        List<String> languages = emailConfigService.findLanguages();
+        List<Integer> pageSize = emailConfigService.findPageSize();
+        model.addAttribute("languages", languages);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("emailConfig", emailConfigService.getEmail());
         return "/index";
     }
 
-    @PostMapping("/save")
-    public String saveForm(@ModelAttribute("emailConfig") EmailConfig emailConfig, Model model) {
+    @PostMapping("/update")
+    public String saveSetting(Model model, @ModelAttribute("emailConfig") EmailConfig emailConfig) {
         emailConfigService.save(emailConfig);
-        model.addAttribute("emailConfig", emailConfig);
-        return "/save";
+        return "/setting";
     }
 }

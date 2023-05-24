@@ -13,8 +13,6 @@ public class EmailConfigRepositoryImpl implements IEmailConfigRepository {
 
     static {
         emailList.add(new EmailConfig("Vietnamese", 10, false, "Thor King, Asgard"));
-        emailList.add(new EmailConfig("English", 50, true, "Anna King, Asgard"));
-        emailList.add(new EmailConfig("Vietnamese", 10, false, "Agenea King, Regard"));
     }
 
     private static List<String> languageList = new ArrayList<>();
@@ -38,19 +36,23 @@ public class EmailConfigRepositoryImpl implements IEmailConfigRepository {
         pageSizeList.add(100);
     }
 
+
     @Override
-    public List<EmailConfig> findAll() {
-        return emailList;
+    public EmailConfig getEmail() {
+        if (emailList.size() > 0) {
+            return emailList.get(emailList.size() - 1);
+        }
+        return null;
     }
 
     @Override
     public List<String> findLanguages() {
-        return findLanguages();
+        return languageList;
     }
 
     @Override
     public List<Integer> findPageSize() {
-        return findPageSize();
+        return pageSizeList;
     }
 
     @Override

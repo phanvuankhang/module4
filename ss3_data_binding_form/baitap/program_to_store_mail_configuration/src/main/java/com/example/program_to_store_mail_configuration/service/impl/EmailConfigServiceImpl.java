@@ -13,9 +13,10 @@ public class EmailConfigServiceImpl implements IEmailConfigService {
     @Autowired
     private IEmailConfigRepository emailConfigRepository;
 
+
     @Override
-    public List<EmailConfig> findAll() {
-        return emailConfigRepository.findAll();
+    public EmailConfig getEmail() {
+        return emailConfigRepository.getEmail();
     }
 
     @Override

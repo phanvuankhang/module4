@@ -12,12 +12,7 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Result</h3><br>
-<h4>Languages: ${emailConfig.getLanguages()}</h4>
-<h4>Page Size: ${emailConfig.getPageSize()}</h4>
-<span>Spam Filter: <c:if test="${emailConfig.isSpamsFilter()==true}">
-    <span>Spams Filter</span>
-</c:if></span>
-<h4>Signature: ${emailConfig.getSignature()}</h4>
+<h1>Setting</h1>
+<a href="/setting">Update</a>
 </body>
 </html>
