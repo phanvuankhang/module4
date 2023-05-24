@@ -15,52 +15,52 @@ public class ProductController {
     @Autowired
     private IProductService productService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String showList(Model model) {
         List<Product> productList = productService.findAll();
         model.addAttribute("productList", productList);
         return "list";
     }
 
-    @GetMapping("show-create-form")
+    @GetMapping("/create")
     public String showCreateForm(Model model) {
         model.addAttribute("product", new Product());
         return "create";
     }
 
-    @PostMapping("create")
-    public String create(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
+    @PostMapping("/create")
+    public String create(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute( "checkCreate", productService.save(product));
-        return "redirect:/";
+        return "redirect:create";
     }
 
-    @GetMapping("show-edit-form/{id}")
+    @GetMapping("/edit/{id}")
     public String showEditForm(Model model, @PathVariable("id") int id) {
         Product product = productService.findById(id);
         model.addAttribute("product", product);
         return "edit";
     }
 
-    @PostMapping("edit")
+    @PostMapping("/edit")
     public String edit(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("checkEdit",productService.edit(product));
         return "redirect:/";
     }
 
-    @GetMapping("delete")
+    @GetMapping("/delete")
     public String delete(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
         redirectAttributes.addFlashAttribute("checkDelete",productService.delete(id));
         return "redirect:/";
     }
 
-    @GetMapping("search")
+    @GetMapping("/search")
     public String search(String search, Model model) {
         List<Product> productList = productService.search(search);
         model.addAttribute("productList", productList);
         return "list";
     }
 
-    @GetMapping("show-detail-form/{id}")
+    @GetMapping("/show-detail-form/{id}")
     public String detail(@PathVariable("id") int id, Model model){
         Product product=productService.findById(id);
         model.addAttribute("product",product);

@@ -51,7 +51,7 @@
                 <h3 class="text-center">PRODUCTS OF LIST</h3>
                 <hr>
                 <div class="container text-left">
-                    <a href="show-create-form"><button type="button" class="btn btn-success btn-rounded">Create new product
+                    <a href="/create"><button type="button" class="btn btn-success btn-rounded">Create new product
                     </button></a>
                 </div>
                 <div class="container text-left">
@@ -77,7 +77,7 @@
                             <td th:text="${productList.description}"></td>
                             <td th:text="${productList.producer}"></td>
                             <td>
-                                <a th:href="@{/show-edit-form/{id}(id=${productList.id})}">
+                                <a th:href="@{/edit/{id}(id=${productList.id})}">
                                     <button class="btn btn-warning">
                                         Update
                                     </button>
@@ -154,29 +154,6 @@
 
 
 
-        <div class="modal fade" id="noticeCreateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="d-flex justify-content-center">
-                            <div th:if="${checkCreate}">
-                                <h5 style="color: green">Create successfully</h5>
-                            </div>
-                            <div th:if="${checkCreate==false}">
-                                <h5 style="color: red">Create failed</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer" style="height: 50px">
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
 
         <div class="modal fade" id="noticeEditModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -221,12 +198,7 @@
         deleteResultModal.show();
     </script>
 </div>
-<div th:if="${checkCreate != null}">
-    <script>
-        let createResultModal = new bootstrap.Modal(document.getElementById('noticeCreateModal'));
-        createResultModal.show();
-    </script>
-</div>
+
 <div th:if="${checkEdit != null}">
     <script>
         let editResultModal = new bootstrap.Modal(document.getElementById('noticeEditModal'));
