@@ -186,12 +186,7 @@
         </script>
     </div>
 </div>
-<script>
-    function deleteProduct(id, name) {
-        document.getElementById("id").value = id;
-        document.getElementById("name").innerText = name;
-    }
-</script>
+
 <div th:if="${check != null}">
     <script>
         let deleteResultModal = new bootstrap.Modal(document.getElementById('noticeDeleteModal'));

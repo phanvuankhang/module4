@@ -2,9 +2,13 @@ package com.example.blog_application.model;
 
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Entity
 public class Blog {
     @Id
@@ -12,22 +16,33 @@ public class Blog {
     private Integer id;
     @NotNull
     private String title;
-    @Column(columnDefinition = "text",nullable = false)
+    @Column(columnDefinition = "text", nullable = false)
     private String content;
     @NotNull
     private String author;
-    @NotNull
-    private String writingDate;
+    @Column(nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @CreationTimestamp
+    private LocalDateTime writingDate;
+    @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
+    @UpdateTimestamp
+    private LocalDateTime updateTime;
 
     public Blog() {
     }
 
-    public Blog(Integer id, String title, String content, String author, String writingDate) {
+    public Blog(String title, String content, String author) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+    }
+
+    public Blog(Integer id, String title, String content, String author, LocalDateTime writingDate, LocalDateTime updateTime) {
         this.id = id;
         this.title = title;
         this.content = content;
         this.author = author;
         this.writingDate = writingDate;
+        this.updateTime = updateTime;
     }
 
     public Integer getId() {
@@ -62,11 +77,19 @@ public class Blog {
         this.author = author;
     }
 
-    public String getWritingDate() {
+    public LocalDateTime getWritingDate() {
         return writingDate;
     }
 
-    public void setWritingDate(String writingDate) {
+    public void setWritingDate(LocalDateTime writingDate) {
         this.writingDate = writingDate;
+    }
+
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
     }
 }
