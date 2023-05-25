@@ -138,10 +138,10 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-center">
-                            <div th:if="${checkDelete}">
+                            <div th:if="${check}">
                                 <h5 style="color: green">Deleted successfully</h5>
                             </div>
-                            <div th:if="${checkDelete==false}">
+                            <div th:if="${check==false}">
                                 <h5 style="color: red">Deleted failed</h5>
                             </div>
                         </div>
@@ -163,11 +163,11 @@
                     </div>
                     <div class="modal-body">
                         <div class="d-flex justify-content-center">
-                            <div th:if="${checkEdit}">
-                                <h5 style="color: green">Create successfully</h5>
+                            <div th:if="${check1}">
+                                <h5 style="color: green">Update successfully</h5>
                             </div>
-                            <div th:if="${checkEdit==false}">
-                                <h5 style="color: red">Create failed</h5>
+                            <div th:if="${check1==false}">
+                                <h5 style="color: red">Update failed</h5>
                             </div>
                         </div>
                     </div>
@@ -192,14 +192,14 @@
         document.getElementById("name").innerText = name;
     }
 </script>
-<div th:if="${checkDelete != null}">
+<div th:if="${check != null}">
     <script>
         let deleteResultModal = new bootstrap.Modal(document.getElementById('noticeDeleteModal'));
         deleteResultModal.show();
     </script>
 </div>
 
-<div th:if="${checkEdit != null}">
+<div th:if="${check1 != null}">
     <script>
         let editResultModal = new bootstrap.Modal(document.getElementById('noticeEditModal'));
         editResultModal.show();

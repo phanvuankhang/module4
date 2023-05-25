@@ -30,7 +30,7 @@ public class ProductController {
 
     @PostMapping("/create")
     public String create(@ModelAttribute("product") Product product, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute( "checkCreate", productService.save(product));
+        redirectAttributes.addFlashAttribute( "check", productService.save(product));
         return "redirect:create";
     }
 
@@ -43,13 +43,13 @@ public class ProductController {
 
     @PostMapping("/edit")
     public String edit(@ModelAttribute Product product, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("checkEdit",productService.edit(product));
+        redirectAttributes.addFlashAttribute("check1",productService.edit(product));
         return "redirect:/";
     }
 
     @GetMapping("/delete")
     public String delete(@RequestParam("id") int id, RedirectAttributes redirectAttributes) {
-        redirectAttributes.addFlashAttribute("checkDelete",productService.delete(id));
+        redirectAttributes.addFlashAttribute("check",productService.delete(id));
         return "redirect:/";
     }
 
