@@ -55,8 +55,8 @@
                             <th>No</th>
                             <th>ID</th>
                             <th>Author</th>
-                            <th hidden>Title</th>
-                            <th>Content</th>
+                            <th>Title</th>
+                            <th hidden>Content</th>
                             <th>Writing Date</th>
                             <th>Update Time</th>
                             <th>Actions</th>
@@ -67,8 +67,8 @@
                             <td th:text="${status.count}"></td>
                             <td th:text="${blog.id}"></td>
                             <td th:text="${blog.author}"></td>
-                            <td hidden th:text="${blog.title}"></td>
-                            <td th:text="${blog.content}"></td>
+                            <td th:text="${blog.title}"></td>
+                            <td hidden th:text="${blog.content}"></td>
                             <td th:text="${blog.writingDate}"></td>
                             <td th:text="${blog.updateTime}"></td>
                             <td>
@@ -79,7 +79,7 @@
                                 </a>
                                 <button class="btn btn-danger" type="button" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal" th:text="Delete"
-                                        th:attr="onclick=|deleteBlog(${blog.id}, '${blog.content}')|">
+                                        th:attr="onclick=|deleteBlog(${blog.id}, '${blog.title}')|">
                                 </button>
                                 </a>
                                 <a th:href="@{/detail/{id}(id=${blog.id})}">
@@ -134,9 +134,9 @@
 
 
 <script>
-    function deleteBlog(id, content) {
+    function deleteBlog(id, title) {
         document.getElementById("id").value = id;
-        document.getElementById("name").innerText = content;
+        document.getElementById("name").innerText = title;
     }
 </script>
 </body>
