@@ -26,6 +26,8 @@ public class Blog {
     @Column(nullable = false, columnDefinition = "TIMESTAMP DEFAULT now()")
     @UpdateTimestamp
     private LocalDateTime updateTime;
+    @ManyToOne()
+    private Category category;
 
     public Blog() {
     }
@@ -43,6 +45,14 @@ public class Blog {
         this.author = author;
         this.writingDate = writingDate;
         this.updateTime = updateTime;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Integer getId() {

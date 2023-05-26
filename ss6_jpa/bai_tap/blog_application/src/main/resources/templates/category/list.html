@@ -27,7 +27,12 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: orange">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            </form>
+            <div clx ass="nav-item">
+                <a style="margin-left: 3vw;font-size: 20px" class="nav-link active" aria-current="page" href="/">Blog</a>
+            </div>
+            <div clx ass="nav-item">
+                <a style="font-size: 20px" class="nav-link active" aria-current="page" href="/category">Category</a>
+            </div>
         </div>
     </div>
 </nav>
@@ -39,13 +44,17 @@
         <div class="row">
             <div class="col-1"></div>
             <div class="col-10">
-                <h3 class="text-center">BLOG OF LIST</h3>
+                <h3 class="text-center">CATEGORY OF LIST</h3>
                 <hr>
                 <div class="container text-left">
-                    <a href="/create">
-                        <button type="button" class="btn btn-success btn-rounded">Create new blog
+                    <a href="/category/create">
+                        <button type="button" class="btn btn-success btn-rounded">Create new category
                         </button>
                     </a>
+                </div>
+
+                <div th:if="${mess}">
+                        <span hidden id="inputId" th:text="${mess}"></span>
                 </div>
                 <div class="container text-left">
                     <table id="tableProduct" class="table table-striped table-bordered"
@@ -54,35 +63,28 @@
                         <tr>
                             <th>No</th>
                             <th>ID</th>
-                            <th>Author</th>
-                            <th>Title</th>
-                            <th hidden>Content</th>
-                            <th>Writing Date</th>
-                            <th>Update Time</th>
+                            <th>Category Name</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr th:each="blog, status:${blogList}">
+                        <tr th:each="category, status:${categoryList}">
                             <td th:text="${status.count}"></td>
-                            <td th:text="${blog.id}"></td>
-                            <td th:text="${blog.author}"></td>
-                            <td th:text="${blog.title}"></td>
-                            <td hidden th:text="${blog.content}"></td>
-                            <td th:text="${blog.writingDate}"></td>
-                            <td th:text="${blog.updateTime}"></td>
+                            <td th:text="${category.id}"></td>
+                            <td th:text="${category.categoryName}"></td>
                             <td>
-                                <a th:href="@{/edit/{id}(id=${blog.id})}">
+                                <a th:href="@{/category/edit/{id}(id=${category.id})}">
                                     <button class="btn btn-warning">
                                         Update
                                     </button>
                                 </a>
                                 <button class="btn btn-danger" type="button" data-bs-toggle="modal"
                                         data-bs-target="#exampleModal" th:text="Delete"
-                                        th:attr="onclick=|deleteBlog(${blog.id}, '${blog.title}')|">
+                                        th:attr="onclick=|inforDelete(${category.id}, '${category.categoryName}')|">
                                 </button>
+                                <a style="display: none" id="actionDelete"></a>
                                 </a>
-                                <a th:href="@{/detail/{id}(id=${blog.id})}">
+                                <a th:href="@{/category/detail/{id}(id=${category.id})}">
                                     <button class="btn btn-primary">
                                         Detail
                                     </button>
@@ -96,6 +98,7 @@
                 <div class="col-1"></div>
             </div>
         </div>
+        <button></button>
         <footer class="text-center text-lg-start bg-light text-muted" style=" bottom: 0;right: 0;left: 0">
             <div class="text-center p-4" style="background-color: orange; color: black">
                 © 2023 Copyright:
@@ -105,27 +108,43 @@
     </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Blog</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form th:action="@{/delete}" method="get">
-                <div class="modal-body">
-                    <input type="text" id="id" name="id" hidden>
-                    Do you want to delete <span style="color: red" id="name"></span>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                    <button type="submit" class="btn btn-primary">Yes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    let inputId =document.getElementById("inputId");
+    if(inputId && inputId.innerText) {
+        swal({
+            title: "SUCCESSFULLY",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) inputId.innerText = ''
+        });
+    }
+</script>
+
+<script>
+    function inforDelete(id ,categoryName){
+        swal({
+            title: `Are you sure delete blog "${categoryName}"?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((isDelete) => {
+                if (isDelete) {
+                    const actionDelete = document.getElementById('actionDelete');
+                    actionDelete.setAttribute('href', `/category/delete?id=${id}`)
+                    actionDelete.click();
+                }
+            });
+    }
+
+
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
         crossorigin="anonymous">
@@ -133,11 +152,5 @@
 </script>
 
 
-<script>
-    function deleteBlog(id, title) {
-        document.getElementById("id").value = id;
-        document.getElementById("name").innerText = title;
-    }
-</script>
 </body>
 </html>
