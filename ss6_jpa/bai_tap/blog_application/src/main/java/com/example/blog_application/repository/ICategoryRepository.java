@@ -9,9 +9,9 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 
 public interface ICategoryRepository extends JpaRepository<Category, Integer> {
-    @Query(value = "UPDATE category SET category.is_delete=true WHERE category.category_id = :id", nativeQuery = true)
-    @Modifying
-    @Transactional
-    void deleteCategory(@Param("id") Integer id);
+        @Query(value = "update category set category.is_delete = 1 where category.category_id = :id", nativeQuery = true)
+        @Modifying
+        @Transactional
+        void deleteCategory(@Param("id") Integer id);
 }
 
