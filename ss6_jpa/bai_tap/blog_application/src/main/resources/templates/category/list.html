@@ -128,7 +128,7 @@
 <script>
     function inforDelete(id ,categoryName){
         swal({
-            title: `Are you sure delete blog "${categoryName}"?`,
+            title: `Are you sure delete category "${categoryName}"?`,
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -136,7 +136,7 @@
             .then((isDelete) => {
                 if (isDelete) {
                     const actionDelete = document.getElementById('actionDelete');
-                    actionDelete.setAttribute('href', `/category/delete?id=${id}`)
+                    actionDelete.setAttribute('href', `/category/delete/${id}`)
                     actionDelete.click();
                 }
             });

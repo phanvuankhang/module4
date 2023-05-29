@@ -34,7 +34,7 @@ public class CategoryController {
         return "redirect:/category";
     }
 
-    @GetMapping("/delete")
+    @GetMapping("/delete/{id}")
     public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes) {
         categoryService.delete(id);
         redirectAttributes.addFlashAttribute("mess","Delete is successfully!");

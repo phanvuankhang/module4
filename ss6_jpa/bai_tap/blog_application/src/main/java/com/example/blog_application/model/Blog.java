@@ -27,6 +27,7 @@ public class Blog {
     @UpdateTimestamp
     private LocalDateTime updateTime;
     @ManyToOne()
+    @JoinColumn
     private Category category;
 
     public Blog() {
