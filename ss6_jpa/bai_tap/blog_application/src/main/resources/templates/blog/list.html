@@ -82,25 +82,25 @@
                             <td th:text="${blog.category.categoryName}"></td>
                             <td th:text="${blog.writingDate}"></td>
                             <td th:text="${blog.updateTime}"></td>
-                            <td>
-                                <a th:href="@{/edit/{id}(id=${blog.id})}">
-                                    <button class="btn btn-warning">
-                                        Update
+                                <td>
+                                    <a th:href="@{/edit/{id}(id=${blog.id})}">
+                                        <button class="btn btn-warning">
+                                            Update
+                                        </button>
+                                    </a>
+                                    <button class="btn btn-danger" type="button" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal" th:text="Delete"
+                                            th:attr="onclick=|inforDelete(${blog.id}, '${blog.title}')|">
                                     </button>
-                                </a>
-                                <button class="btn btn-danger" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#exampleModal" th:text="Delete"
-                                        th:attr="onclick=|inforDelete(${blog.id}, '${blog.title}')|">
-                                </button>
-                                <a style="display: none" id="actionDelete"></a>
-                                </a>
-                                <a th:href="@{/detail/{id}(id=${blog.id})}">
-                                    <button class="btn btn-primary">
-                                        Detail
-                                    </button>
-                                </a>
+                                    <a style="display: none" id="actionDelete"></a>
+                                    </a>
+                                    <a th:href="@{/detail/{id}(id=${blog.id})}">
+                                        <button class="btn btn-primary">
+                                            Detail
+                                        </button>
+                                    </a>
 
-                            </td>
+                                </td>
                         </tr>
                         </tbody>
                     </table>
