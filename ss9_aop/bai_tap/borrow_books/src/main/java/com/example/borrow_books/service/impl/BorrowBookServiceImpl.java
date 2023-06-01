@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 public class BorrowBookServiceImpl implements IBorrowBookService {
@@ -35,5 +36,13 @@ public class BorrowBookServiceImpl implements IBorrowBookService {
             }
         }
         return null;
+    }
+
+    @Override
+    public String generateRandomCode() {
+        int min = 10000;
+        int max = 99999;
+        int randomNum = ThreadLocalRandom.current().nextInt(min, max + 1);
+        return String.valueOf(randomNum);
     }
 }

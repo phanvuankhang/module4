@@ -10,4 +10,5 @@ public interface IBorrowBookService {
     boolean saveBorrowBook(BorrowBook borrowBook);
 
     BorrowBook returnBook(String codeBorrowBook);
+    String generateRandomCode();
 }

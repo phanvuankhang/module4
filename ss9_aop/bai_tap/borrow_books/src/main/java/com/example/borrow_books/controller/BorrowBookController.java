@@ -27,27 +27,42 @@ public class BorrowBookController {
     }
 
     @GetMapping("/borrow")
-    public String borrowBook(@RequestParam(value = "id", defaultValue = "0") Long id, RedirectAttributes redirectAttributes) {
+    public String borrowBook(Model model, @RequestParam(value = "id", defaultValue = "0") Long id, RedirectAttributes redirectAttributes) {
         if (id == 0) {
-            throw new RuntimeException("");
+            throw new RuntimeException("Invalid book ID");
         }
+
         Book book = iBookService.findBookById(id);
+
         String codeBorrowBook;
         boolean checkCodeBorrowBook;
+        int maxAttempts = 100; // Giới hạn số lần lặp
+        int attemptCount = 0;
+
         do {
             checkCodeBorrowBook = true;
-            codeBorrowBook = String.valueOf(Math.round(Math.random() * (99999 - 10000) + 10000));
+            codeBorrowBook = iBorrowBookService.generateRandomCode();
+
             List<BorrowBook> borrowBooks = iBorrowBookService.findAll();
-            for (int i = 0; i < borrowBooks.size(); i++) {
-                if (borrowBooks.get(i).getCodeBorrowBook().equals(codeBorrowBook)) {
+
+            for (BorrowBook borrowBook : borrowBooks) {
+                if (borrowBook.getCodeBorrowBook().equals(codeBorrowBook)) {
                     checkCodeBorrowBook = false;
                     break;
                 }
             }
-        } while (!checkCodeBorrowBook);
+
+            attemptCount++;
+        } while (!checkCodeBorrowBook && attemptCount < maxAttempts);
+
+        if (!checkCodeBorrowBook) {
+            throw new RuntimeException("Unable to generate unique borrow code");
+        }
+
         BorrowBook borrowBook = new BorrowBook(book, codeBorrowBook, false);
         boolean statusBorrowBook = iBorrowBookService.saveBorrowBook(borrowBook);
         iBookService.updateBorrow(id);
+
         return "redirect:/";
     }
 
