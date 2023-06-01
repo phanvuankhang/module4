@@ -18,50 +18,50 @@
         rel="stylesheet"
 />
 <head>
-  <title>Title</title>
+    <title>Title</title>
 </head>
 <body th:object="${product}">
 
 <div style="width: 100%;  height: 800px" class="row">
-  <div style="background-color: #e0e0e0" class="col-lg-2 col-md-1 col-sm"></div>
-  <div class="col-lg-8 col-md-10 col-sm-12">
-    <div style="width: 100%; height: auto" class="row">
-      <div class="row" style="height: auto; text-align: center; padding-bottom: 30px"><h1>Product Information</h1>
-      </div>
-      <div style="background-color: white" class="col-lg-6 col-md-12"><img width="100%" ; th:src="*{image}"
-                                                                           class="rounded float-start" alt="...">
-      </div>
-      <div style="background-color: white" class="col-lg-6 col-md-12">
-        <div style="height: 100px" class="row">
-          <h2 th:text="*{name}"></h2>
+    <div style="background-color: #e0e0e0" class="col-lg-2 col-md-1 col-sm"></div>
+    <div class="col-lg-8 col-md-10 col-sm-12">
+        <div style="width: 100%; height: auto" class="row">
+            <div class="row" style="height: auto; text-align: center; padding-bottom: 30px"><h1>Product Information</h1>
+            </div>
+            <div style="background-color: white" class="col-lg-6 col-md-12"><img width="100%" ; th:src="*{image}"
+                                                                                 class="rounded float-start" alt="...">
+            </div>
+            <div style="background-color: white" class="col-lg-6 col-md-12">
+                <div style="height: 100px" class="row">
+                    <h2 th:text="*{name}"></h2>
+                </div>
+                <div style="height: auto" class="row">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td>Code</td>
+                            <td th:text="*{id}"></td>
+                        </tr>
+                        <tr>
+                            <td>Price</td>
+                            <td th:text="*{price}"></td>
+                        </tr>
+
+                    </table>
+
+                </div>
+                <div class="row" style="height: auto">
+                    <h3>Description</h3>
+                    <p th:text="*{description}"></p></div>
+                <a th:href="@{/addToCart/{id}(id=*{id})}">
+                    <button class="btn-dark">Thêm vào giỏ</button>
+                </a>
+
+            </div>
         </div>
-        <div style="height: auto" class="row">
-          <table class="table table-borderless">
-            <tr>
-              <td>Code</td>
-              <td th:text="*{id}"></td>
-            </tr>
-            <tr>
-              <td>Price</td>
-              <td th:text="*{price}"></td>
-            </tr>
 
-          </table>
 
-        </div>
-        <div class="row" style="height: auto">
-          <h3>Description</h3>
-          <p th:text="*{description}"></p></div>
-        <a th:href="@{/addToCart/{id}(id=*{id})}">
-          <button class="btn-dark">Thêm vào giỏ</button>
-        </a>
-
-      </div>
     </div>
-
-
-  </div>
-  <div style="background-color: #e0e0e0" class="col-lg-2 col-md-1 col-sm"></div>
+    <div style="background-color: #e0e0e0" class="col-lg-2 col-md-1 col-sm"></div>
 </div>
 
 

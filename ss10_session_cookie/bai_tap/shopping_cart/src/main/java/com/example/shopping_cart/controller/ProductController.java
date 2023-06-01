@@ -23,7 +23,7 @@ public class ProductController {
     private ICartService cartService;
 
     @ModelAttribute("cart")
-    public Map<Product,Integer> initCart() {
+    public Map<Product, Integer> initCart() {
         return new LinkedHashMap<>();
     }
 
@@ -34,11 +34,12 @@ public class ProductController {
     }
 
     @GetMapping("/detail/{id}")
-    public String detail(@PathVariable("id") Long id,Model model){
-        Product product=productService.findById(id);
-        model.addAttribute("product",product);
+    public String detail(@PathVariable("id") Long id, Model model) {
+        Product product = productService.findById(id);
+        model.addAttribute("product", product);
         return "/detail";
     }
+
     @GetMapping("/addToCart/{id}")
     public String addToCart(@PathVariable("id") Long id, RedirectAttributes redirectAttributes,
                             @ModelAttribute("cart") Map<Product, Integer> productIntegerMap) {
@@ -46,10 +47,10 @@ public class ProductController {
         if (!cartService.checkExits(product, productIntegerMap)) {
             productIntegerMap.put(product, 1);
         } else {
-            Map.Entry<Product,Integer> m = cartService.productIntegerEntry(product,productIntegerMap);
+            Map.Entry<Product, Integer> m = cartService.productIntegerEntry(product, productIntegerMap);
 
             Integer quantity = m.getValue() + 1;
-            productIntegerMap.replace(m.getKey(),quantity);
+            productIntegerMap.replace(m.getKey(), quantity);
         }
         redirectAttributes.addFlashAttribute("mess", "ADDED");
 

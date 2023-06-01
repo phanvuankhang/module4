@@ -18,29 +18,32 @@ public class CartController {
     private ICartService cartService;
     @Autowired
     private IProductService productService;
+
     @GetMapping("/cart")
-    public String showCart(@SessionAttribute("cart")Map<Product,Integer> productIntegerMap, Model model){
-        model.addAttribute("cart",productIntegerMap);
-        double total=cartService.getTotal(productIntegerMap);
-        model.addAttribute("total",total);
+    public String showCart(@SessionAttribute("cart") Map<Product, Integer> productIntegerMap, Model model) {
+        model.addAttribute("cart", productIntegerMap);
+        double total = cartService.getTotal(productIntegerMap);
+        model.addAttribute("total", total);
         return "shopping-cart";
     }
+
     @GetMapping("/add/{id}")
     public String add(@PathVariable("id") Long id, RedirectAttributes redirectAttributes,
                       @ModelAttribute("cart") Map<Product, Integer> productIntegerMap) {
-        Product product =productService.findById(id);
+        Product product = productService.findById(id);
         if (!cartService.checkExits(product, productIntegerMap)) {
             productIntegerMap.put(product, 1);
         } else {
-            Map.Entry<Product,Integer> m = cartService.productIntegerEntry(product,productIntegerMap);
+            Map.Entry<Product, Integer> m = cartService.productIntegerEntry(product, productIntegerMap);
 
             Integer quantity = m.getValue() + 1;
-            productIntegerMap.replace(m.getKey(),quantity);
+            productIntegerMap.replace(m.getKey(), quantity);
         }
         redirectAttributes.addFlashAttribute("mess", "ADDED");
 
         return "redirect:/cart";
     }
+
     @GetMapping("/remove/{id}")
     public String removeToCart(@PathVariable("id") Long id, RedirectAttributes redirectAttributes,
                                @ModelAttribute("cart") Map<Product, Integer> productIntegerMap) {
@@ -49,11 +52,11 @@ public class CartController {
         if (!cartService.checkExits(product, productIntegerMap)) {
             productIntegerMap.put(product, 1);
         } else {
-            Map.Entry<Product,Integer> m = cartService.productIntegerEntry(product,productIntegerMap);
+            Map.Entry<Product, Integer> m = cartService.productIntegerEntry(product, productIntegerMap);
 
             quantity = m.getValue() - 1;
-            productIntegerMap.replace(m.getKey(),quantity);
-            if (m.getValue()==0){
+            productIntegerMap.replace(m.getKey(), quantity);
+            if (m.getValue() == 0) {
                 productIntegerMap.remove(m.getKey());
             }
         }
