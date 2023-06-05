@@ -19,50 +19,23 @@ public class BorrowBookController {
     @Autowired
     private IBorrowBookService iBorrowBookService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String displayList(Model model) {
         List<Book> bookList = iBookService.findAll();
         model.addAttribute("bookList", bookList);
-        return "home";
+        return "/home";
     }
 
     @GetMapping("/borrow")
-    public String borrowBook(Model model, @RequestParam(value = "id", defaultValue = "0") Long id, RedirectAttributes redirectAttributes) {
+    public String borrowBook(@RequestParam(value = "id", defaultValue = "0") Long id, RedirectAttributes redirectAttributes) {
         if (id == 0) {
-            throw new RuntimeException("Invalid book ID");
+            throw new RuntimeException("");
         }
-
+        String codeBorrowBook = iBorrowBookService.randomCodeborrow();
         Book book = iBookService.findBookById(id);
-
-        String codeBorrowBook;
-        boolean checkCodeBorrowBook;
-        int maxAttempts = 100; // Giới hạn số lần lặp
-        int attemptCount = 0;
-
-        do {
-            checkCodeBorrowBook = true;
-            codeBorrowBook = iBorrowBookService.generateRandomCode();
-
-            List<BorrowBook> borrowBooks = iBorrowBookService.findAll();
-
-            for (BorrowBook borrowBook : borrowBooks) {
-                if (borrowBook.getCodeBorrowBook().equals(codeBorrowBook)) {
-                    checkCodeBorrowBook = false;
-                    break;
-                }
-            }
-
-            attemptCount++;
-        } while (!checkCodeBorrowBook && attemptCount < maxAttempts);
-
-        if (!checkCodeBorrowBook) {
-            throw new RuntimeException("Unable to generate unique borrow code");
-        }
-
         BorrowBook borrowBook = new BorrowBook(book, codeBorrowBook, false);
         boolean statusBorrowBook = iBorrowBookService.saveBorrowBook(borrowBook);
         iBookService.updateBorrow(id);
-
         return "redirect:/";
     }
 
@@ -86,6 +59,6 @@ public class BorrowBookController {
 
     @ExceptionHandler(Exception.class)
     public String exception() {
-        return "error";
+        return "/error";
     }
 }

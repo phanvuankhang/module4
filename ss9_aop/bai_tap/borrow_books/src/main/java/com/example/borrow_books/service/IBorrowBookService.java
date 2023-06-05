@@ -6,9 +6,7 @@ import java.util.List;
 
 public interface IBorrowBookService {
     List<BorrowBook> findAll();
-
     boolean saveBorrowBook(BorrowBook borrowBook);
-
     BorrowBook returnBook(String codeBorrowBook);
-    String generateRandomCode();
+    String randomCodeborrow();
 }

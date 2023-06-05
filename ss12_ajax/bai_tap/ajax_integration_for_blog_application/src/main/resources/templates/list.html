@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <style>
+        #ig1-user-page {
+            color: black;
+        }
+
+        #ig1-user-page:hover {
+            color: white;
+        }
+
+        #navbarSupportedContent ul li:hover a {
+            color: white;
+        }
+
+        #navbarSupportedContent ul li a {
+            color: black;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary" style="background-color: orange">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div clx ass="nav-item">
+                <a style="margin-left: 3vw;font-size: 20px" class="nav-link active" aria-current="page"
+                   href="/">Blog</a>
+            </div>
+            <div clx ass="nav-item">
+                <a style="font-size: 20px" class="nav-link active" aria-current="page" href="/category">Category</a>
+            </div>
+        </div>
+
+        <input type="text" id="title" placeholder="Nhập từ khóa tìm kiếm">
+        <button onclick="search()" type="submit">Tìm kiếm</button>
+
+    </div>
+</nav>
+<br>
+
+
+<div class="row">
+    <div class="container-fluid my-lg-2">
+        <div class="row">
+            <div class="col-1"></div>
+            <div class="col-10">
+                <h3 class="text-center">BLOG OF LIST</h3>
+                <hr>
+                <div class="container text-left">
+                    <a href="/create">
+                        <button type="button" class="btn btn-success btn-rounded">Create new blog
+                        </button>
+                    </a>
+                </div>
+
+                <div th:if="${mess}">
+                    <span hidden id="inputId" th:text="${mess}"></span>
+                </div>
+                <div class="container text-left">
+                    <table id="tableBlog" class="table table-striped table-bordered"
+                           style="width:100%; margin-top: 20px">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Author</th>
+                            <th>Title</th>
+                            <th>Content</th>
+                            <th>Category</th>
+                            <th>Writing Date</th>
+                            <th>Update Time</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="col-1"></div>
+            </div>
+        </div>
+        <button onclick="downloadMore()">Tải thêm</button>
+        <footer class="text-center text-lg-start bg-light text-muted" style=" bottom: 0;right: 0;left: 0">
+            <div class="text-center p-4" style="background-color: orange; color: black">
+                © 2023 Copyright:
+                <a class="text-reset fw-bold" href="https://mdbootstrap.com/"></a>
+            </div>
+        </footer>
+    </div>
+</div>
+
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<script>
+    let inputId = document.getElementById("inputId");
+    if (inputId && inputId.innerText) {
+        swal({
+            title: "SUCCESSFULLY",
+            text: inputId.innerText,
+            icon: "success",
+            button: "OK",
+        }).then((idOk) => {
+            if (idOk) inputId.innerText = ''
+        });
+    }
+</script>
+
+<script>
+    function inforDelete(id, title) {
+        swal({
+            title: `Are you sure delete blog "${title}"?`,
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((isDelete) => {
+                if (isDelete) {
+                    const actionDelete = document.getElementById('actionDelete');
+                    actionDelete.setAttribute('href', `/delete?id=${id}`)
+                    actionDelete.click();
+                }
+            });
+    }
+
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous">
+
+</script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: 'http://localhost:8080/api/blog',
+            type: 'GET',
+            success: function (data) {
+                let table = document.getElementById("tableBlog");
+                for (let i = 0; i < data.content.length; i++) {
+                    let row = table.insertRow(i + 1);
+                    let id = row.insertCell(0);
+                    let author = row.insertCell(1);
+                    let title = row.insertCell(2);
+                    let content = row.insertCell(3);
+                    let category = row.insertCell(4)
+                    let writingDate = row.insertCell(5);
+                    let updateTime = row.insertCell(6);
+                    id.innerHTML = data.content[i].id;
+                    author.innerHTML = data.content[i].author;
+                    title.innerHTML = data.content[i].title;
+                    content.innerHTML = data.content[i].content;
+                    category.innerHTML = data.content[i].category.categoryName;
+                    writingDate.innerHTML = data.content[i].writingDate;
+                    updateTime.innerHTML = data.content[i].updateTime;
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    })
+</script>
+
+<script>
+    function search() {
+        let title = document.getElementById('title').value;
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: 'http://localhost:8080/api/blog/search?title=' + encodeURIComponent(title),
+            type: 'GET',
+            success: function (data) {
+                let table = document.getElementById("tableBlog");
+                while (table.rows.length > 1) {
+                    table.deleteRow(1);
+                }
+                for (let i = 0; i < data.length; i++) {
+                    let row = table.insertRow(i + 1);
+                    let id = row.insertCell(0);
+                    let author = row.insertCell(1);
+                    let title = row.insertCell(2);
+                    let content = row.insertCell(3);
+                    let category = row.insertCell(4)
+                    let writingDate = row.insertCell(5);
+                    let updateTime = row.insertCell(6);
+                    id.innerHTML = data[i].id;
+                    author.innerHTML = data[i].author;
+                    title.innerHTML = data[i].title;
+                    content.innerHTML = data[i].content;
+                    category.innerHTML = data[i].category.categoryName;
+                    writingDate.innerHTML = data[i].writingDate;
+                    updateTime.innerHTML = data[i].updateTime;
+                }
+            },
+            error: function (data) {
+                console.log(data)
+            }
+        })
+    }
+</script>
+<script>
+    let page = 1;
+
+    function downloadMore() {
+        $.ajax({
+            headers: {
+                'accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            url: 'http://localhost:8080/api/blog/?page=' + encodeURIComponent(page++),
+            type: 'GET',
+            success: function (data) {
+                let table = document.getElementById("tableBlog")
+                for (let i = 0; i < data.content.length; i++) {
+                    let row = table.insertRow(i + 1);
+                    let id = row.insertCell(0);
+                    let author = row.insertCell(1);
+                    let title = row.insertCell(2);
+                    let content = row.insertCell(3);
+                    let category = row.insertCell(4)
+                    let writingDate = row.insertCell(5);
+                    let updateTime = row.insertCell(6);
+                    id.innerHTML = data.content[i].id;
+                    author.innerHTML = data.content[i].author;
+                    title.innerHTML = data.content[i].title;
+                    content.innerHTML = data.content[i].content;
+                    category.innerHTML = data.content[i].category.categoryName;
+                    writingDate.innerHTML = data.content[i].writingDate;
+                    updateTime.innerHTML = data.content[i].updateTime;
+                }
+            },
+            error: function () {
+
+            }
+        });
+    };
+</script>
+</body>
+</html>
