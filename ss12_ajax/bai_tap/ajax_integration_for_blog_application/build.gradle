@@ -23,6 +23,8 @@ dependencies {
         options.encoding = 'UTF-8'
     }
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 }
 
 tasks.named('test') {
