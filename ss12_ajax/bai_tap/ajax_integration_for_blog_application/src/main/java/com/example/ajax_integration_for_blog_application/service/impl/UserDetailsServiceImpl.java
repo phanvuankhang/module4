@@ -1,9 +1,12 @@
 package com.example.ajax_integration_for_blog_application.service.impl;
 
 import com.example.ajax_integration_for_blog_application.model.AppUser;
+import com.example.ajax_integration_for_blog_application.model.UserRole;
 import com.example.ajax_integration_for_blog_application.repository.IAppUserRepository;
+import com.example.ajax_integration_for_blog_application.repository.IUserRoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,6 +21,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Autowired
     private IAppUserRepository appUserRepository;
+    @Autowired
+    private IUserRoleRepository userRoleRepository;
 
 
     @Override
@@ -35,6 +40,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
         List<GrantedAuthority> grantList = new ArrayList<>();
 
+        List<UserRole> userRoles = this.userRoleRepository.findByAppUser(appUser);
+        if (userRoles != null) {
+            for (UserRole userRole : userRoles) {
+                // ROLE_USER, ROLE_ADMIN,..
+                GrantedAuthority authority = new SimpleGrantedAuthority(userRole.getAppRole().getRoleName());
+                grantList.add(authority);
+            }
+        }
         UserDetails userDetails = new User(appUser.getUserName(),
                 appUser.getEncrytedPassword(), grantList);
 

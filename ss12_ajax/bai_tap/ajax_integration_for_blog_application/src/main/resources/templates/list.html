@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -53,8 +53,7 @@
                 <hr>
                 <div class="container text-left">
                     <a href="/create">
-                        <button type="button" class="btn btn-success btn-rounded">Create new blog
-                        </button>
+                        <div sec:authorize="hasAuthority('ROLE_ADMIN')"><p><a href="/blog/create">Create Student</a></p> </div>
                     </a>
                 </div>
 
@@ -140,7 +139,7 @@
                 'accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: 'http://localhost:8080/api/blog',
+            url: 'http://localhost:8080/api/admin/blog',
             type: 'GET',
             success: function (data) {
                 let table = document.getElementById("tableBlog");
@@ -177,7 +176,7 @@
                 'accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: 'http://localhost:8080/api/blog/search?title=' + encodeURIComponent(title),
+            url: 'http://localhost:8080/api/admin/blog/search?title=' + encodeURIComponent(title),
             type: 'GET',
             success: function (data) {
                 let table = document.getElementById("tableBlog");
@@ -217,7 +216,7 @@
                 'accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            url: 'http://localhost:8080/api/blog/?page=' + encodeURIComponent(page++),
+            url: 'http://localhost:8080/api/admin/blog/?page=' + encodeURIComponent(page++),
             type: 'GET',
             success: function (data) {
                 let table = document.getElementById("tableBlog")

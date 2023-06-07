@@ -27,7 +27,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 
         http.csrf().disable();
+        http.authorizeRequests()
+                .antMatchers("/blog")
+                .access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
 
+        http.authorizeRequests()
+                .antMatchers("/blog/create", "/api/admin/*")
+                .access("hasRole('ROLE_ADMIN')");
+
+        http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
 
         // Cấu hình cho Login Form.
         http.authorizeRequests().antMatchers("/login").permitAll()
